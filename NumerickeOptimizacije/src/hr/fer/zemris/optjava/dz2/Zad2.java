@@ -20,7 +20,7 @@ public class Zad2 implements IHFunction{
 	@Override
 	public RealMatrix GetGradient(RealMatrix point) {
 		double[] points = point.getColumn(0);
-		double[] matrixData = {2*(points[0]-2), 20*(points[1] -2)}; 
+		double[] matrixData = {2*(points[0]-1), 20*(points[1] -2)}; 
 		return new Array2DRowRealMatrix(matrixData);
 	}
 
