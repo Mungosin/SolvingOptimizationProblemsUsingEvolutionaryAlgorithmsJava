@@ -27,22 +27,32 @@ public class Sustav {
 				maxIterations = Integer.parseInt(args[1]);
 			}catch (NumberFormatException e){
 				System.out.println("second parameter must be a number defining maximum iterations");	
+				return;
 			}
 			Random rand = new Random(System.currentTimeMillis());
 			double[] randomPoint = { rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), 
-									 rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), rand.nextDouble(),
 									 rand.nextDouble(), rand.nextDouble()};
 			RealMatrix point = new Array2DRowRealMatrix(randomPoint);
 			
 			filePath = args[2];
+			RealMatrix[] matrices = ReadUsefulRows(filePath);
+			if(matrices == null){
+				System.out.println("File doesn't contain correct problem definition");
+				return;
+			}
+			
+			Zad3 problem = new Zad3(matrices);
 			
 			switch(args[0]){
 			case "grad":
-				
+				NumOptAlgorithms.GradientDescentMethod(problem, maxIterations, point);
+				return;
 			case "newton":
-				
+				NumOptAlgorithms.NewtonMethod(problem, maxIterations, point);
+				return;
 				default:
 					System.out.println("Parameters are not correct");
+					return;
 			}
 		}		
 	}

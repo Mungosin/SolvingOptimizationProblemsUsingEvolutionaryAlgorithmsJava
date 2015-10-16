@@ -51,9 +51,10 @@ public class HelperIFunction {
 	
 	public boolean CheckIfPointIsOptimum(RealMatrix point){
 		RealMatrix gradient = myFunction.GetGradient(point);
+		double roundingFactor = Math.pow(10, Constants.roundDoublePrecision);
 		double[] values = gradient.getColumn(0);
 		for(double value : values){
-			if (value != 0){
+			if ((Math.round( value * roundingFactor ) / roundingFactor) != 0){
 				return false;
 			}
 		}

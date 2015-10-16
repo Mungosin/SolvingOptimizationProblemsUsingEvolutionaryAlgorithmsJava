@@ -9,6 +9,8 @@ public class NumOptAlgorithms {
 		RealMatrix currentPoint = point;
 		double[] pointValues;
 		double functionValue;
+		double pointLength;
+		double roundingFactor = Math.pow(10, Constants.roundDoublePrecision);
 		double lamda = 0;
 		for(int i=0;i<maxIterations; i++){
 			if(myFunc.CheckIfPointIsOptimum(currentPoint)){
@@ -18,7 +20,16 @@ public class NumOptAlgorithms {
 			currentPoint = myFunc.CalculateMyPoint(lamda, currentPoint);
 			pointValues = currentPoint.getColumn(0);
 			functionValue = object.GetValueOfFunction(currentPoint);
-			System.out.println("("+pointValues[0]+", "+ pointValues[1]+")"+ "-> function value = " + functionValue);
+			pointLength = pointValues.length;
+			System.out.print("(");
+			for(int j=0;j<pointLength;j++){
+				if(j==pointLength-1){
+					System.out.format("%10.10f", pointValues[j]);
+					break;
+				}
+				System.out.format("%10.10f, ", pointValues[j]);
+			}
+			System.out.println(") -> function value = " + (Math.round( functionValue * roundingFactor ) / roundingFactor));
 		}
 		return currentPoint;
 	}
@@ -28,6 +39,8 @@ public class NumOptAlgorithms {
 		RealMatrix currentPoint = point;
 		double[] pointValues;
 		double functionValue;
+		double pointLength;
+		double roundingFactor = Math.pow(10, Constants.roundDoublePrecision);
 		double lamda = 0;
 		for(int i=0;i<maxIterations; i++){
 			if(myHFunc.CheckIfPointIsOptimum(currentPoint)){
@@ -37,7 +50,16 @@ public class NumOptAlgorithms {
 			currentPoint = myHFunc.CalculateMyPoint(lamda, currentPoint);
 			pointValues = currentPoint.getColumn(0);
 			functionValue = object.GetValueOfFunction(currentPoint);
-			System.out.println("("+pointValues[0]+", "+ pointValues[1]+")"+ "-> function value = " + functionValue);
+			pointLength = pointValues.length;
+			System.out.print("(");
+			for(int j=0;j<pointLength;j++){
+				if(j==pointLength-1){
+					System.out.format("%10.10f", pointValues[j]);
+					break;
+				}
+				System.out.format("%10.10f, ", pointValues[j]);
+			}
+			System.out.println(") -> function value = " + (Math.round( functionValue * roundingFactor ) / roundingFactor));
 		}
 		return currentPoint;
 	}

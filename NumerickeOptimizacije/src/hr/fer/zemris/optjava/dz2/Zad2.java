@@ -5,7 +5,7 @@ import org.apache.commons.math3.linear.RealMatrix;
 import org.apache.commons.math3.linear.RealMatrixFormat;
 
 public class Zad2 implements IHFunction{
-	// f(x1,x2) = (x1-2)^2 + 10*(x2-2)^2
+	// f(x1,x2) = (x1-1)^2 + 10*(x2-2)^2
 	@Override
 	public int GetNumberOfVariables() {
 		return 2;
