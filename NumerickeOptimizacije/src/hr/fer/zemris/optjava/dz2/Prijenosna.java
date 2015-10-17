@@ -1,10 +1,7 @@
 package hr.fer.zemris.optjava.dz2;
 
-
-import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileReader;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Random;
@@ -13,7 +10,7 @@ import java.util.Scanner;
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
 
-public class Sustav {
+public class Prijenosna {
 
 	public static void main(String[] args) {
 		int maxIterations;
@@ -31,10 +28,9 @@ public class Sustav {
 			}
 			Random rand = new Random(System.currentTimeMillis());
 			double[] randomPoint = { rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), 
-									 rand.nextDouble(), rand.nextDouble(), rand.nextDouble(), rand.nextDouble(),
 									 rand.nextDouble(), rand.nextDouble()};
 			RealMatrix point = new Array2DRowRealMatrix(randomPoint);
-			
+			  
 			filePath = args[2];
 			RealMatrix[] matrices = ReadUsefulRows(filePath);
 			if(matrices == null){
@@ -42,8 +38,7 @@ public class Sustav {
 				return;
 			}
 			
-			Zad3 problem = new Zad3(matrices);
-			
+			Zad4 problem = new Zad4(matrices);
 			switch(args[0]){
 			case "grad":
 				NumOptAlgorithms.GradientDescentMethod(problem, maxIterations, point);
@@ -100,6 +95,5 @@ public class Sustav {
 		}
 		return matrices;	
 	}
-	
-	
+
 }

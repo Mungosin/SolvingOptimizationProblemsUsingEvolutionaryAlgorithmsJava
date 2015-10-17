@@ -36,7 +36,6 @@ public class HelperIFunction {
 		currentPoint = CalculateMyPoint(lamdaOpt, x);
 		derivationValue = DerivationOfFiByLamda(currentPoint,x);
 		while(!(-1*Constants.tolerance<=derivationValue && derivationValue<=Constants.tolerance) && iterations-->0){
-
 			if(derivationValue>0){
 				lamdaUpper = lamdaOpt;
 			}else {
