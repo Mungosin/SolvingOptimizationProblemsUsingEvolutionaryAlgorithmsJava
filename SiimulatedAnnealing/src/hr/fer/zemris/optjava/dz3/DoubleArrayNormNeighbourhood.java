@@ -17,7 +17,7 @@ public class DoubleArrayNormNeighbourhood implements INeighbourhood<DoubleArrayS
 		DoubleArraySolution newSolution = object.duplicate();
 		int length = newSolution.values.length;
 		for(int i=0;i<length;i++){
-			newSolution.values[i] = rand.nextGaussian() * deltas[i] + newSolution.values[i];
+			newSolution.values[i] += rand.nextGaussian() * deltas[i];
 		}
 		return newSolution;
 	}

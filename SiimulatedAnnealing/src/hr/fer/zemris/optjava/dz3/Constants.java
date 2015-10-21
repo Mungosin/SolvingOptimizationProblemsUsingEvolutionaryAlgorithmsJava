@@ -4,7 +4,7 @@ public class Constants {
 	public static final double maxs = -10;
 	public static final double mins = 10;
 	
-	public static final double[] deltas ={5,5,5,5,5,5};
+	public static final double[] deltas ={0.3,0.3,0.3,0.3,0.3,0.3};
 	public static final double[] lowerBounds ={-5,-5,-5,-5,-5,-5};
 	public static final double[] upperBounds ={5,5,5,5,5,5};
 	

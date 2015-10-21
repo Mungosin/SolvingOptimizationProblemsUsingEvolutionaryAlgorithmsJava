@@ -61,7 +61,7 @@ public class RegresijaSustava {
 					BitVectorSolution startWithBinary = new BitVectorSolution(6*n);
 					startWithBinary.Randomize(rand);
 					IDecoder<BitVectorSolution> decoder = new GreyBinaryDecoder(mins, maxs, bits, 6);
-					INeighbourhood<BitVectorSolution> neighbourhood = new BitVectorNeighbourhood();
+					INeighbourhood<BitVectorSolution> neighbourhood = new BitVectorNeighbourhood(n,bits.length);
 					
 					switch(args[2]){
 					case "greedy":

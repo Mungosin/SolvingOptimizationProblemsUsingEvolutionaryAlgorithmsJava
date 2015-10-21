@@ -1,5 +1,6 @@
 package hr.fer.zemris.optjava.dz3;
 
+import java.util.Arrays;
 import java.util.Random;
 
 public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements IOptAlgorithm<T>{
@@ -27,7 +28,8 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 		current.fitness = izracunajFitness(current);
 		nextNeighbour.fitness = izracunajFitness(nextNeighbour);
 		int pointLength;
-		double[] pointValues;
+		double[] pointValues = null;
+		double[] previousPointValues = null;
 		double currentTemp = tempSchedule.getNextTemperature();
 		int outerIterations = tempSchedule.getOuterLoopCounter();
 		int innerIterations = tempSchedule.getInnerLoopCounter();
@@ -47,18 +49,31 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 				}
 				if(delta <=0 || rand.nextDouble()<=Math.exp((delta*(-1))/currentTemp)){
 					current = nextNeighbour;
-					pointValues = decoder.decode(current);
-					pointLength = pointValues.length;
-					for(int z=0;z<pointLength;z++){
-						if(z==pointLength-1){
-							System.out.format("%10.10f", pointValues[z]);
-							break;
-						}
-						System.out.format("%10.10f, ", pointValues[z]);
-					}
-					System.out.println(") -> function value = " + function.valueAt(pointValues));
+//					pointValues = decoder.decode(current);
+//					pointLength = pointValues.length;
+//					for(int z=0;z<pointLength;z++){
+//						if(z==pointLength-1){
+//							System.out.format("%10.10f", pointValues[z]);
+//							break;
+//						}
+//						System.out.format("%10.10f, ", pointValues[z]);
+//					}
+//					System.out.println(") -> function value = " + function.valueAt(pointValues));
 				}
 			}
+			pointValues = decoder.decode(current);
+			if(Arrays.equals(pointValues, previousPointValues)) continue;
+			
+			pointLength = pointValues.length;
+			for(int z=0;z<pointLength;z++){
+				if(z==pointLength-1){
+					System.out.format("%10.10f", pointValues[z]);
+					break;
+				}
+				System.out.format("%10.10f, ", pointValues[z]);
+			}
+			System.out.println(") -> function value = " + function.valueAt(pointValues));
+			previousPointValues=pointValues;
 			currentTemp=tempSchedule.getNextTemperature();
 			
 			
