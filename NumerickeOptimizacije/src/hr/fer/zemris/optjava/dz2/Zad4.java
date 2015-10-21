@@ -90,45 +90,61 @@ public class Zad4 implements IHFunction{
 					points[2] * Math.exp(points[3]*coeff[2]) * (1+Math.cos( Math.exp(1)* coeff[3])) + //neznam da li je e nepoznanica ili euler
 					points[4] * coeff[3]*coeff[4];
 			currentValue -= solution[i];
-			// 0-a, 1-b, 2-c, 3-d,4-g, 5-f
-			// 0-x1, 1-x2, 2-x3, 3-x4, 4-x5
-			
+
 			hessian[0][0] += 2* coeff[0] * coeff[0];
 			hessian[0][1] += 2 * Math.pow(coeff[0],4) * coeff[1];
-			hessian[0][2] += functionCoefficientsDerivedFirstTimeByA * functionDerivedSecondTimeByC;
-			hessian[0][3] += functionCoefficientsDerivedFirstTimeByA * functionDerivedSecondTimeByD;
-			hessian[0][4] += functionCoefficientsDerivedFirstTimeByA * functionDerivedSecondTimeByF;
-			hessian[0][5]
+			hessian[0][2] += 2* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * coeff[0];
+			hessian[0][3] += 2 *(Math.cos(points[4] * coeff[3])) * Math.exp(points[3] * coeff[2]) *coeff[0] * coeff[2];
+			hessian[0][4] += -2*(Math.sin(points[4] * coeff[3])) * Math.exp(points[3] * coeff[2]) * coeff[0] + coeff[3];
+			hessian[0][5] += 2*coeff[0] * coeff[3] * coeff[4] * coeff[4];
 			
-			hessian[1][0] += functionCoefficientsDerivedFirstTimeByB * functionDerivedSecondTimeByA;
-			hessian[1][1] += functionCoefficientsDerivedFirstTimeByB * functionDerivedSecondTimeByB;
-			hessian[1][2] += functionCoefficientsDerivedFirstTimeByB * functionDerivedSecondTimeByC;
-			hessian[1][3] += functionCoefficientsDerivedFirstTimeByB * functionDerivedSecondTimeByD;
-			hessian[1][4] += functionCoefficientsDerivedFirstTimeByB * functionDerivedSecondTimeByF;
-			hessian[1][5]
+			hessian[1][0] += 2 * Math.pow(coeff[0],4) * coeff[1];
+			hessian[1][1] += 2 * Math.pow(coeff[0],6) * Math.pow(coeff[1], 2);
+			hessian[1][2] += 2*Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * Math.pow(points[0], 3) *coeff[1];
+			hessian[1][3] += 2* points[2]*Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1);
+			hessian[1][4] += -2*points[2] *(Math.sin(points[4] * coeff[3])) * Math.exp(points[3] * coeff[2]) * Math.pow(coeff[0], 3) * coeff[1]*coeff[3];
+			hessian[1][5] += 2*Math.pow(coeff[0], 3) * coeff[1] * coeff[3] * Math.pow(coeff[4], 2);
 			
-			hessian[2][0] += functionCoefficientsDerivedFirstTimeByC * functionDerivedSecondTimeByA;
-			hessian[2][1] += functionCoefficientsDerivedFirstTimeByC * functionDerivedSecondTimeByB;
-			hessian[2][2] += functionCoefficientsDerivedFirstTimeByC * functionDerivedSecondTimeByC;
-			hessian[2][3] += functionCoefficientsDerivedFirstTimeByC * functionDerivedSecondTimeByD;
-			hessian[2][4] += functionCoefficientsDerivedFirstTimeByC * functionDerivedSecondTimeByF;
-			hessian[2][5]
-			
-			hessian[3][0] += functionCoefficientsDerivedFirstTimeByD * functionDerivedSecondTimeByA;
-			hessian[3][1] += functionCoefficientsDerivedFirstTimeByD * functionDerivedSecondTimeByB;
-			hessian[3][2] += functionCoefficientsDerivedFirstTimeByD * functionDerivedSecondTimeByC;
-			hessian[3][3] += functionCoefficientsDerivedFirstTimeByD * functionDerivedSecondTimeByD;
-			hessian[3][4] += functionCoefficientsDerivedFirstTimeByD * functionDerivedSecondTimeByF;
-			hessian[3][5]
-			
-			hessian[4][0] += functionCoefficientsDerivedFirstTimeByF * functionDerivedSecondTimeByA;
-			hessian[4][1] += functionCoefficientsDerivedFirstTimeByF * functionDerivedSecondTimeByB;
-			hessian[4][2] += functionCoefficientsDerivedFirstTimeByF * functionDerivedSecondTimeByC;
-			hessian[4][3] += functionCoefficientsDerivedFirstTimeByF * functionDerivedSecondTimeByD;
-			hessian[4][4] += functionCoefficientsDerivedFirstTimeByF * functionDerivedSecondTimeByF;
-			hessian[4][5]
 					
-			hessian[5][5]
+			hessian[2][0] += 2* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * coeff[0];
+			hessian[2][1] += 2* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1)*Math.pow(coeff[0], 3) * coeff[1];
+			hessian[2][2] += 2* Math.exp(points[3] * coeff[2]) * Math.pow((Math.cos(points[4] * coeff[3])+1), 2);
+			hessian[2][3] += 2* points[2]* coeff[2]* Math.exp(points[3] * coeff[2]) * Math.pow((Math.cos(points[4] * coeff[3])+1), 2) + 2*currentValue* coeff[2]*Math.exp(points[3] * coeff[2]) * Math.pow((Math.cos(points[4] * coeff[3])+1), 2);
+			hessian[2][4] += -2*points[2] *(Math.sin(points[4] * coeff[3])) * Math.exp(points[3] * 2*coeff[2]) *(Math.cos(points[4] * coeff[3])+1) -2*currentValue*(Math.sin(points[4] * coeff[3])) * Math.exp(points[3] * coeff[2]) ;
+			hessian[2][5] +=  2*Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) *coeff[3] * Math.pow(coeff[4], 2);
+			
+						
+			hessian[3][0] +=  2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * coeff[0] * coeff[3] ;
+			hessian[3][1] += 2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * Math.pow(coeff[0], 3) * coeff[1] * coeff[3];
+			hessian[3][2] += 2*points[2]* Math.exp(points[3] * coeff[2]) * Math.pow((Math.cos(points[4] * coeff[3])+1),2) + 2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * coeff[2] * currentValue;
+			hessian[3][3] += 2*Math.pow(points[2],2)* Math.exp(points[3]*2 * coeff[2]) * Math.pow((Math.cos(points[4] * coeff[3])+1),2);
+			hessian[3][4] += -2 * Math.exp(points[3]*2 * coeff[2]) * Math.sin(points[4] * coeff[3]) * (Math.cos(points[4] * coeff[3])+1) * coeff[2]*coeff[3]* Math.pow(points[2], 2)
+								-2*coeff[2] *points[2]* coeff[3] * currentValue* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3]));
+			hessian[3][5] += 2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * coeff[2] * coeff[3] * Math.pow(coeff[4], 2);
+			
+					// 0-a, 1-b, 2-c, 3-d,4-g, 5-f points
+					// 0-x1, 1-x2, 2-x3, 3-x4, 4-x5 coeff
+					
+					//e^dx3 -- Math.exp(points[3] * coeff[2])
+					//(cos(gx4)+1)-- (Math.cos(points[4] * coeff[3])+1)
+					// -2ce^dx3 * sin(gx4) -- -2*points[2]* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3])) 
+					// 2ce^dx3 * (cos(gx4)+1) -- 2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1)
+					
+					
+			hessian[4][0] += -2*points[2]* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3])) * coeff[0] * coeff[3];
+			hessian[4][1] += -2*points[2]* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3])) * Math.pow(coeff[0],3) * coeff[1] * coeff[3];
+			hessian[4][2] +=  -2*points[2]* Math.exp(points[3] *2* coeff[2])*(Math.sin(points[4] * coeff[3]))*coeff[3] * (Math.cos(points[4] * coeff[3])+1) -2* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3]))*currentValue * coeff[3];
+			hessian[4][3] += -2*Math.pow(points[2],2)* Math.exp(points[3] *2* coeff[2])*(Math.sin(points[4] * coeff[3])) * (Math.cos(points[4] * coeff[3])+1) * coeff[2] *coeff[3]
+						-2*points[2]* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3]))*coeff[2] * coeff[3] * currentValue ;
+			hessian[4][4] += 2 * Math.pow(points[2], 2) * Math.exp(points[3]*2 * coeff[2]) * Math.pow((Math.sin(points[4] * coeff[3])), 2) - 2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * Math.pow(coeff[3],2) * currentValue;
+			hessian[4][5] += -2*points[2]* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3])) * Math.pow(coeff[3], 2) * Math.pow(coeff[4], 2);
+					
+			hessian[5][0] += 2 * coeff[0] * coeff[3] *Math.pow(coeff[4], 2);
+			hessian[5][1] += 2* Math.pow(coeff[0], 3) * coeff[1] * coeff[3] * Math.pow(coeff[4], 2);
+			hessian[5][2] += 2* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1) * coeff[3] * Math.pow(coeff[4], 2);
+			hessian[5][3] += 2*points[2]* Math.exp(points[3] * coeff[2]) * (Math.cos(points[4] * coeff[3])+1)*coeff[2] * coeff[3] * Math.pow(coeff[4], 2);
+			hessian[5][4] += -2*points[2]* Math.exp(points[3] * coeff[2]) *(Math.sin(points[4] * coeff[3])) * Math.pow(coeff[3], 2);
+			hessian[5][5] += 2 * Math.pow(coeff[3], 2) * Math.pow(coeff[4], 2);
 		}
 		return new Array2DRowRealMatrix(hessian);
 	}
