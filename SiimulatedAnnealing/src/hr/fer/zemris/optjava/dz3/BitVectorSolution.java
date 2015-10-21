@@ -20,6 +20,13 @@ public class BitVectorSolution extends SingleObjectiveSolution{
 	}
 	
 	public void Randomize(Random rand){
-		//implementiraj
+		int length = bits.length;
+		for(int i=0;i<length;i++){
+			if(rand.nextBoolean()){
+				bits[i] = 1;
+			}else {
+				bits[i] = 0;
+			}
+		}
 	}
 }

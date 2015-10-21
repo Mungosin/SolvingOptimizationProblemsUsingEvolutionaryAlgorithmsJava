@@ -1,5 +1,15 @@
 package hr.fer.zemris.optjava.dz3;
 
-public class PassTroughDecoder {
+public class PassTroughDecoder implements IDecoder<DoubleArraySolution>{
+
+	@Override
+	public double[] decode(DoubleArraySolution object) {
+		return object.values.clone();
+	}
+
+	@Override
+	public void decode(DoubleArraySolution object, double[] result) {
+		result = object.values.clone();
+	}
 
 }

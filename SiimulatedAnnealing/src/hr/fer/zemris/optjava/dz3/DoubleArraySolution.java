@@ -21,6 +21,9 @@ public class DoubleArraySolution extends SingleObjectiveSolution{
 	}
 	
 	public void Randomize(Random rand, double[] lowerBounds, double[] upperBounds){
-		//implementiraj
+		int length = values.length;
+		for(int i=0;i<length;i++){
+			values[i] = rand.nextDouble() * (upperBounds[i] - lowerBounds[i]) + lowerBounds[i];
+		}
 	}
 }

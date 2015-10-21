@@ -19,7 +19,6 @@ public class GreyBinaryDecoder extends BitVectorDecoder{
 		int[] binaryCode;
 		int[] subBytes;
 		int numOfBitsPerVariable = this.totalBits/this.n;
-		
 		for(int i=0;i<this.n;i++){
 			subBytes = copyArray(object.bits, i*numOfBitsPerVariable, (i+1)* numOfBitsPerVariable);
 			binaryCode = grayToBinary(subBytes);
@@ -32,7 +31,6 @@ public class GreyBinaryDecoder extends BitVectorDecoder{
 
 	@Override
 	public void decode(BitVectorSolution object, double[] result) {
-		int codeLength = object.bits.length;
 		double valueOfCode=0;
 		int[] binaryCode;
 		int[] subBytes;

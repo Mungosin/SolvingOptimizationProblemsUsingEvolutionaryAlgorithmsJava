@@ -1,5 +1,23 @@
 package hr.fer.zemris.optjava.dz3;
 
-public class DoubleArrayUnifNeighbourhood {
+import java.util.Random;
 
+public class DoubleArrayUnifNeighbourhood implements INeighbourhood<DoubleArraySolution>{
+	private double[] deltas;
+	Random rand;
+	
+	public DoubleArrayUnifNeighbourhood(double[] deltas){
+		this.deltas = deltas;
+		rand = new Random(System.currentTimeMillis());
+	}
+	
+	@Override
+	public DoubleArraySolution randomNeighbour(DoubleArraySolution object) {
+		DoubleArraySolution newSolution = object.duplicate();
+		int length = newSolution.values.length;
+		for(int i=0;i<length;i++){
+			newSolution.values[i] += (rand.nextDouble()*2 -1) * deltas[i];
+		}
+		return newSolution;
+	}
 }
