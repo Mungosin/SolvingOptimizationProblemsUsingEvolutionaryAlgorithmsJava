@@ -2,12 +2,20 @@ package hr.fer.zemris.optjava.dz3;
 
 import java.security.InvalidParameterException;
 import java.util.Random;
-
+/**
+ * Class implements INeighbourhood for bit vector solution and calculates the next neighbour by flipping the random bit of every variable to another value
+ *
+ */
 public class BitVectorNeighbourhood implements INeighbourhood<BitVectorSolution>{
 	Random rand;
 	int n;
 	int totalBits;
 	
+	/**
+	 * Constructor for BitVectorNeighbourhood object
+	 * @param n number of bits per variable
+	 * @param totalBits total number of bits
+	 */
 	public BitVectorNeighbourhood(int n, int totalBits){
 
 		if((1.*totalBits)/n != totalBits/n){

@@ -1,5 +1,9 @@
 package hr.fer.zemris.optjava.dz3;
-
+/**
+ * 
+ *Class implements greedy algorithm method to optimize functions
+ * @param <T> has to extend SingleObjective solution
+ */
 public class GreedyAlgorithm<T extends SingleObjectiveSolution> implements IOptAlgorithm<T>{
 	private IDecoder<T> decoder;
 	private INeighbourhood<T> neighbourhood;
@@ -7,6 +11,15 @@ public class GreedyAlgorithm<T extends SingleObjectiveSolution> implements IOptA
 	private IFunction function;
 	private boolean minimize;
 	
+	
+	/**
+	 * 
+	 * @param decoder decodes the current representation of the solution to a double array and implements IDecoder
+	 * @param neighbourhood class is used to generate the neighbourhood of the current solution and implements INeighbourhood
+	 * @param startWith starting point
+	 * @param function which is being optimized, implements IFunction
+	 * @param minimize if true the function is being minimized, if false it is being maximized
+	 */
 	public GreedyAlgorithm (IDecoder<T> decoder, INeighbourhood<T> neighbourhood, T startWith, IFunction function, boolean minimize){
 		this.decoder = decoder;
 		this.neighbourhood = neighbourhood;
@@ -19,8 +32,8 @@ public class GreedyAlgorithm<T extends SingleObjectiveSolution> implements IOptA
 	public void run() {
 		T current = startWith;
 		T nextNeighbour = neighbourhood.randomNeighbour(current);
-		current.fitness = izracunajFitness(current);
-		nextNeighbour.fitness = izracunajFitness(nextNeighbour);
+		current.fitness = calculateFitness(current);
+		nextNeighbour.fitness = calculateFitness(nextNeighbour);
 		int value;
 		int pointLength;
 		double[] pointValues;
@@ -50,12 +63,17 @@ public class GreedyAlgorithm<T extends SingleObjectiveSolution> implements IOptA
 				current = nextNeighbour;
 			}
 			nextNeighbour = neighbourhood.randomNeighbour(current);
-			nextNeighbour.fitness = izracunajFitness(nextNeighbour);
+			nextNeighbour.fitness = calculateFitness(nextNeighbour);
 			
 		}
 	}
 	
-	private double izracunajFitness(T nextNeighbour){
+	/**
+	 * Method is used to calculate fitness of the given solution
+	 * @param nextNeighbour solution whose fitness is being calculated
+	 * @return fitness value of the given object
+	 */
+	private double calculateFitness(T nextNeighbour){
 		return function.valueAt(decoder.decode(nextNeighbour));
 	}
 

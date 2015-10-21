@@ -9,12 +9,20 @@ import java.util.Scanner;
 
 import org.apache.commons.math3.linear.Array2DRowRealMatrix;
 import org.apache.commons.math3.linear.RealMatrix;
+/**
+ * Class is implementing the function from numeric optimisations problem 4
+ *
+ */
 
 public class Zad4 implements IFunction{
 	private RealMatrix[] coefficients;
 	private double[] solution;
 	private int numberOfVariables;
 	
+	/**
+	 * Constructor for Zad4 that initializes coefficients and solutions, aswell as number of variables
+	 * @param filePath to the file that contains definition of the problem
+	 */
 	public Zad4(String filePath){
 		RealMatrix[] coefficients = ReadUsefulRows(filePath);
 		if(coefficients == null){
@@ -29,7 +37,12 @@ public class Zad4 implements IFunction{
 		}
 		this.solution = solutions;
 	}
-	
+
+	/**
+	 * Method is used to read the useful values from a text file whose path is given as a parameter
+	 * @param filePath path to the text file with informations about the problem
+	 * @return coefficients of the problem sorted in a matrix and the solution as at the last index of the column
+	 */
 	public static RealMatrix[] ReadUsefulRows(String filePath){
 		File definition = new File(Paths.get(filePath).toAbsolutePath().toString());
 		ArrayList<double[]> listOfCoefficients = new ArrayList<>();

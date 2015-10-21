@@ -2,6 +2,11 @@ package hr.fer.zemris.optjava.dz3;
 
 import java.util.Arrays;
 import java.util.Random;
+/**
+ * 
+ *Class implements simulated annealing algorithm method to optimize functions
+ * @param <T> has to extend SingleObjective solution
+ */
 
 public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements IOptAlgorithm<T>{
 
@@ -12,6 +17,15 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 	private boolean minimize;
 	private ITempSchedule tempSchedule;
 	
+	/**
+	 * Constructor for SimulatedAnnealing object
+	 * @param decoder decodes the current representation of the solution to a double array and implements IDecoder
+	 * @param neighbourhood class is used to generate the neighbourhood of the current solution and implements INeighbourhood
+	 * @param startWith starting point
+	 * @param function which is being optimized, implements IFunction
+	 * @param minimize if true the function is being minimized, if false it is being maximized
+	 * @param tempSchedule ITempschedule object that calculates next temperature and sets the inner and outer loop iterations
+	 */
 	public SimulatedAnnealing (IDecoder<T> decoder, INeighbourhood<T> neighbourhood, T startWith, IFunction function, boolean minimize, ITempSchedule tempSchedule){
 		this.decoder = decoder;
 		this.neighbourhood = neighbourhood;
@@ -25,8 +39,8 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 	public void run() {
 		T current = startWith;
 		T nextNeighbour = neighbourhood.randomNeighbour(current);
-		current.fitness = izracunajFitness(current);
-		nextNeighbour.fitness = izracunajFitness(nextNeighbour);
+		current.fitness = calculateFitness(current);
+		nextNeighbour.fitness = calculateFitness(nextNeighbour);
 		int pointLength;
 		double[] pointValues = null;
 		double[] previousPointValues = null;
@@ -42,23 +56,13 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 			
 			for(int j=0;j<innerIterations;j++){
 				nextNeighbour = neighbourhood.randomNeighbour(current);
-				nextNeighbour.fitness = izracunajFitness(nextNeighbour);
+				nextNeighbour.fitness = calculateFitness(nextNeighbour);
 				delta = nextNeighbour.fitness-current.fitness;
 				if(!minimize){
 					delta = delta*(-1);
 				}
 				if(delta <=0 || rand.nextDouble()<=Math.exp((delta*(-1))/currentTemp)){
 					current = nextNeighbour;
-//					pointValues = decoder.decode(current);
-//					pointLength = pointValues.length;
-//					for(int z=0;z<pointLength;z++){
-//						if(z==pointLength-1){
-//							System.out.format("%10.10f", pointValues[z]);
-//							break;
-//						}
-//						System.out.format("%10.10f, ", pointValues[z]);
-//					}
-//					System.out.println(") -> function value = " + function.valueAt(pointValues));
 				}
 			}
 			pointValues = decoder.decode(current);
@@ -80,7 +84,12 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 		}
 	}
 	
-	private double izracunajFitness(T nextNeighbour){
+	/**
+	 * Method is used to calculate fitness of the given solution
+	 * @param nextNeighbour solution whose fitness is being calculated
+	 * @return fitness value of the given object
+	 */
+	private double calculateFitness(T nextNeighbour){
 		return function.valueAt(decoder.decode(nextNeighbour));
 	}
 

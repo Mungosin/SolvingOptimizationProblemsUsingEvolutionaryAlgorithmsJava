@@ -3,8 +3,16 @@ package hr.fer.zemris.optjava.dz3;
 import java.util.Arrays;
 import java.util.Random;
 
+/**
+ * Class implements the main method and calls the appropriate algorithms based on the inputs
+ *
+ */
 public class RegresijaSustava {
 
+	/**
+	 * Main method
+	 * @param args command line arguments
+	 */
 	public static void main(String[] args) {
 		if(args.length != 3){
 			System.out.println("Parameters are not correct, first is the parameter is the path "

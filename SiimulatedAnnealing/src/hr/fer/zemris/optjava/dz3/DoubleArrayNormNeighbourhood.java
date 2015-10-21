@@ -1,11 +1,18 @@
 package hr.fer.zemris.optjava.dz3;
 
 import java.util.Random;
+/**
+ * Class implements INeighbourhood for double array solution objects and calculates it as a normal distribution
+ *
+ */
 
 public class DoubleArrayNormNeighbourhood implements INeighbourhood<DoubleArraySolution>{
 	private double[] deltas;
 	Random rand;
-	
+	/**
+	 * Constructor for DoubleArrayNormNeighbourhood object
+	 * @param deltas the interval for each variable
+	 */
 	public DoubleArrayNormNeighbourhood(double[] deltas){
 		this.deltas = deltas;
 		rand = new Random(System.currentTimeMillis());

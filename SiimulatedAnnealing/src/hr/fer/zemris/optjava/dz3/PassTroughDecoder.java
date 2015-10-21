@@ -1,5 +1,9 @@
 package hr.fer.zemris.optjava.dz3;
 
+/**
+ * This class implements IDecoder interface, and allows the object of type DoubleArraySolution to pass trough, returning his value without decoding
+ *
+ */
 public class PassTroughDecoder implements IDecoder<DoubleArraySolution>{
 
 	@Override
