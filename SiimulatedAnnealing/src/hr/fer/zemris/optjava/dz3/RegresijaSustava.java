@@ -16,7 +16,7 @@ public class RegresijaSustava {
 	public static void main(String[] args) {
 		if(args.length != 3){
 			System.out.println("Parameters are not correct, first is the parameter is the path "
-					+ "to the text file containing the definition of system  the second is the way of solving, binary or decimal, and the third is the algorithm greedy or annealing");
+					+ "to the text file containing the definition of system  the second is the way of solving, binary or decimal, and the third is the algorithm greedy or ann");
 			return;
 		}else {
 			
@@ -26,7 +26,7 @@ public class RegresijaSustava {
 				
 
 				IDecoder<DoubleArraySolution> decoder = new PassTroughDecoder();
-				INeighbourhood<DoubleArraySolution> neighbourhood = new DoubleArrayNormNeighbourhood(Constants.deltas);
+				INeighbourhood<DoubleArraySolution> neighbourhood = new DoubleArrayUnifNeighbourhood(Constants.deltas);
 				DoubleArraySolution startWithDouble = new DoubleArraySolution(6);
 				startWithDouble.Randomize(new Random(System.currentTimeMillis()), Constants.lowerBounds, Constants.upperBounds);
 				
@@ -35,7 +35,7 @@ public class RegresijaSustava {
 					GreedyAlgorithm<DoubleArraySolution> greedy= new GreedyAlgorithm<> (decoder, neighbourhood, startWithDouble, function, Constants.minimize);
 					greedy.run();
 					return;
-				case "annaeling":
+				case "ann":
 					ITempSchedule sched = new GeometricTempSchedule(Constants.alpha, Constants.beginingTemp, Constants.innerLimit, Constants.outerLimit);
 					SimulatedAnnealing<DoubleArraySolution> annaeling = new SimulatedAnnealing<> (decoder, neighbourhood, startWithDouble, function, Constants.minimize, sched);
 					annaeling.run();
@@ -76,7 +76,7 @@ public class RegresijaSustava {
 						GreedyAlgorithm<BitVectorSolution> greedy= new GreedyAlgorithm<>(decoder, neighbourhood, startWithBinary, function, Constants.minimize);
 						greedy.run();
 						break;
-					case "annaeling":
+					case "ann":
 						ITempSchedule sched = new GeometricTempSchedule(Constants.alpha, Constants.beginingTemp, Constants.innerLimit, Constants.outerLimit);
 						SimulatedAnnealing<BitVectorSolution> annaeling = new SimulatedAnnealing<> (decoder, neighbourhood, startWithBinary, function, Constants.minimize, sched);
 						annaeling.run();

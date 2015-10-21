@@ -87,7 +87,7 @@ public class GreyBinaryDecoder extends BitVectorDecoder{
 			if(i==0){
 				binaryCode[0] = grayCode[0];
 			}else {
-				if(grayCode[i-1] != grayCode[i]){
+				if(binaryCode[i-1] != grayCode[i]){
 					binaryCode[i] = 1;
 				}else {
 					binaryCode[i] = 0;

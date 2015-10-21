@@ -40,6 +40,7 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 		T current = startWith;
 		T nextNeighbour = neighbourhood.randomNeighbour(current);
 		current.fitness = calculateFitness(current);
+		T bestFound = current;
 		nextNeighbour.fitness = calculateFitness(nextNeighbour);
 		int pointLength;
 		double[] pointValues = null;
@@ -63,12 +64,18 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 				}
 				if(delta <=0 || rand.nextDouble()<=Math.exp((delta*(-1))/currentTemp)){
 					current = nextNeighbour;
+					if(!minimize && bestFound.fitness < current.fitness){
+						bestFound=current;
+					}else if(minimize && bestFound.fitness > current.fitness){
+						bestFound = current;
+					}
 				}
 			}
 			pointValues = decoder.decode(current);
 			if(Arrays.equals(pointValues, previousPointValues)) continue;
 			
 			pointLength = pointValues.length;
+			System.out.print("(");
 			for(int z=0;z<pointLength;z++){
 				if(z==pointLength-1){
 					System.out.format("%10.10f", pointValues[z]);
@@ -79,9 +86,20 @@ public  class SimulatedAnnealing<T extends SingleObjectiveSolution> implements I
 			System.out.println(") -> function value = " + function.valueAt(pointValues));
 			previousPointValues=pointValues;
 			currentTemp=tempSchedule.getNextTemperature();
-			
-			
 		}
+		
+		System.out.println("_________ Best found solution ___________");
+		pointValues = decoder.decode(bestFound);
+		System.out.print("(");
+		pointLength = pointValues.length;
+		for(int z=0;z<pointLength;z++){
+			if(z==pointLength-1){
+				System.out.format("%10.10f", pointValues[z]);
+				break;
+			}
+			System.out.format("%10.10f, ", pointValues[z]);
+		}
+		System.out.println(") -> function value = " + function.valueAt(pointValues));
 	}
 	
 	/**
