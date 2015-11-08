@@ -90,10 +90,10 @@ public class SASEGASAlgorithm implements IOptAlgorithm<LinkedList<ObjectPlacemen
 				populationToRemove.removeLast();
 				addToPopulation++;
 			}
-
 			populations.removeLast();
 		}
 		System.out.println("Population size: 1");
+		System.out.println("Running algorithm for last population");
 		LinkedList<ObjectPlacementSolution> lastPopulation = populations.getFirst();
 		
 		RAPGAlgorithm newAlg = new RAPGAlgorithm(mutationChance, minPopulation, maxPopulation, changeCompFactorTroughIterations, maxSelectionPressure, selection, successRatio, lastPopulation);

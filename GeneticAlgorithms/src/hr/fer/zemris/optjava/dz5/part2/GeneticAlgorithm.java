@@ -11,10 +11,8 @@ import java.util.TreeSet;
 
 public class GeneticAlgorithm {
 
-	// if max selection pressure or max population is too high in some examples the program might run for too long since the population generation will have a very long time to try to find a better population
-//for 10 20 100 true 2 0.8 4 0.3 path  finds 3748 for nug25 but lasts a while and optimum is 3744
+// if max selection pressure or max population is too high in some examples the program might run for too long since the population generation will have a very long time to try to find a better population
 //works for 10 20 30 true 2 0.8 4 0.3 path 
-//also for 20 40 30 true 1.8 0.8 4 0.3 path
 	public static void main(String[] args) {
 		int minPopulation, maxPopulation, tournament;
 		boolean changeCompFactorTroughIterations;

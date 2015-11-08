@@ -171,6 +171,7 @@ public class RAPGAlgorithm implements IOptAlgorithm<LinkedList<ObjectPlacementSo
 	private ObjectPlacementSolution createChild(ObjectPlacementSolution firstParent, ObjectPlacementSolution secondParent) {
 		ObjectPlacementSolution child = firstParent.duplicate();
 		LinkedList<Integer> LocationsToAdd = new LinkedList<Integer>();
+		LinkedList<Integer> LocationsToReplace = new LinkedList<Integer>();
 		int secondParentSize = secondParent.LocationOfObjects.size();
 		int firstCrossoverPoint = rand.nextInt(secondParentSize);
 		int secondCrossoverPoint = rand.nextInt(secondParentSize);
@@ -181,17 +182,16 @@ public class RAPGAlgorithm implements IOptAlgorithm<LinkedList<ObjectPlacementSo
 			secondCrossoverPoint = p;
 		}
 		
-		for(int i = firstCrossoverPoint;i<secondCrossoverPoint;i++){
-			LocationsToAdd.add(firstParent.LocationOfObjects.get(i).intValue());
-		}
-		
-		for(int i = firstCrossoverPoint;i<secondCrossoverPoint;i++){
-			int secondParentValue = secondParent.LocationOfObjects.get(i);
-			int indexOfElementToReplace = i;
-			int replaceWith = rand.nextInt(LocationsToAdd.size());
-			firstParent.LocationOfObjects.set(indexOfElementToReplace, LocationsToAdd.get(replaceWith));
-			LocationsToAdd.remove(replaceWith);
-			firstParent.LocationOfObjects.set(i, secondParentValue);
+		for(int i=firstCrossoverPoint;i<secondCrossoverPoint;i++){
+			int p = child.LocationOfObjects.get(i).intValue();
+			int secondParentValue = secondParent.LocationOfObjects.get(i).intValue();
+			if(p == secondParentValue){
+				continue;
+			}else {
+				int index = child.LocationOfObjects.indexOf(new Integer(secondParentValue));
+				child.LocationOfObjects.set(i, secondParentValue);
+				child.LocationOfObjects.set(index, p);
+			}
 		}
 		
 		return child;
