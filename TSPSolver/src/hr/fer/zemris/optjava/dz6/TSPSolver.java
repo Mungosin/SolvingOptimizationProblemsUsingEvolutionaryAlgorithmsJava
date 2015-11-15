@@ -38,6 +38,7 @@ public class TSPSolver {
 		try{
 			File source = new File(args[0]);
 			Scanner scan = new Scanner(source);
+			Scanner scan2 = new Scanner(System.in);
 			numberOfTowns = scan.nextInt();
 			for(int i=0;i<numberOfTowns;i++){
 				cities.add(new City(scan.nextInt(),scan.nextDouble(),scan.nextDouble()));
@@ -55,6 +56,7 @@ public class TSPSolver {
 					distanceBetweenTowns[i][j] = euclidDistance;
 				}
 			}
+
 		}catch(Exception e){
 			System.out.println("First parameter must be a path to the file defining TSP");
 			return;
