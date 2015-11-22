@@ -2,7 +2,10 @@ package hr.fer.zemris.optjava.dz7;
 
 import java.util.Arrays;
 import java.util.LinkedList;
-
+/**
+ * Class implements methods and attributes used to represent a neural network
+ *
+ */
 public class FFANN {
 	public int numberOfElementsPerLayer[];
 	public IFunction transferFunction[];
@@ -10,6 +13,12 @@ public class FFANN {
 	public LinkedList<NeuralLayer> neuralLayers;
 	public int weightCount;
 	
+	/**
+	 * Constructor for neural FFANN class
+	 * @param numberOfElementsPerLayer number of neurons in the neural layer
+	 * @param transferFunction tranfer functions used per layer
+	 * @param data dataset used to train the neural network
+	 */
 	public FFANN(int numberOfElementsPerLayer[], IFunction transferFunction[], Dataset data){
 		this.numberOfElementsPerLayer = numberOfElementsPerLayer;
 		this.transferFunction = transferFunction;
@@ -34,10 +43,20 @@ public class FFANN {
 		
 	}
 	
+	/**
+	 * Method returns the number of weights of the neural network
+	 * @return number of weights
+	 */
 	public int getWeightsCount(){
 		return weightCount;
 	}
 	
+	/**
+	 * Method calculates the outputs of the neural network based on the given inputs and weights
+	 * @param inputs inputs for the network
+	 * @param weights weights of the network
+	 * @param outputs array where the outputs will be written
+	 */
 	public void calcOutputs(double inputs[], double weights[], double[] outputs){
 		int weightsFrom = 0;
 		int weightsTo = 0;
@@ -63,6 +82,10 @@ public class FFANN {
 		}
 	}
 	
+	/**
+	 * Method is used to get the dataset of the neural network
+	 * @return training dataset of the network
+	 */
 	public Dataset getData(){
 		return this.data;
 	}
