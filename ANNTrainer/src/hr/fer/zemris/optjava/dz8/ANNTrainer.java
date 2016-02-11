@@ -8,9 +8,16 @@ import java.util.Scanner;
 import hr.fer.zemris.optjava.dz8.EvaluateSolution;
 import hr.fer.zemris.optjava.dz8.FFANN;
 import hr.fer.zemris.optjava.dz8.IFunction;
-
+/**
+ * 
+ * Class implements main method and methods to load data for training
+ */
 public class ANNTrainer {
 	
+	/**
+	 * Main method
+	 * @param args command line arguments
+	 */
 	public static void main(String[] args) {
 		Dataset data =null;
 		int firstNetParameter=0;
@@ -59,7 +66,7 @@ public class ANNTrainer {
 		try{
 			double normalizationFactor = getNormalizationFactor(args[0]);
 			double min = getMin(args[0]);
-			data = loadDataset(args[0], net[0], 100, elman, normalizationFactor,min);
+			data = loadDataset(args[0], net[0], 100, normalizationFactor,min);
 			
 		}catch(Exception e){
 			System.out.println("wrong file path");
@@ -92,42 +99,22 @@ public class ANNTrainer {
 
 		
 		
-//		for(Data dat : data.data){
-//			System.out.println("input");
-//			for(Double value : dat.input){
-//				System.out.print(value);
-//			}
-//			System.out.println();
-//			System.out.println("output");
-//			for(Double value : dat.output){
-//				System.out.print(value);
-//			}
-//			System.out.println();
-//		}
 		IFunction fun[] = new IFunction[net.length-1];
 		for(int i=0;i<fun.length;i++){
 			fun[i] = new HiperbolicTan();
 		}
 		FFANN neural = new FFANN(net, fun, data, elman);
 		
-//		for(int i=0;i<data.getSizeOfSample();i++){
-//			Data dat = data.getIthSample(i);
-//			for(int j=0;j<dat.input.size();j++){
-//				if(!(dat.input.get(j)<1 || dat.input.get(j)>1)){
-//					System.out.println("zakej" + dat.input.get(j));
-//				}
-//			}
-//			for(int j=0;j<dat.output.size();j++){
-//				if(!(dat.output.get(j)>1 || dat.output.get(j)<1)){
-//					System.out.println("zakej" + dat.output.get(j));
-//				}
-//			}
-//		}
 		EvaluateSolution evaluator = new EvaluateSolution(neural);
 		DifferentialEvolution  alg = new DifferentialEvolution(n, neural.weightCount, evaluator, merr, maxIter);
 		alg.run();
 	}
 	
+	/**
+	 * Method gets the minimal data from the dataset
+	 * @param pathToFile path to file containing data
+	 * @return the minimal element
+	 */
 	public static double getMin(String pathToFile){
 		File dataFile = new File(pathToFile);
 		Scanner scan = null;
@@ -152,6 +139,11 @@ public class ANNTrainer {
 		return min;
 	}
 	
+	/**
+	 * Method is used to get the normalization factor
+	 * @param pathToFile path to file containing data
+	 * @return the normalization factor
+	 */
 	private static double getNormalizationFactor(String pathToFile) {
 		File dataFile = new File(pathToFile);
 		Scanner scan = null;
@@ -184,12 +176,19 @@ public class ANNTrainer {
 		
 	}
 
-	public static Dataset loadDataset(String pathToFile, int bufferSize, int numberOfSamples, boolean elman, double normalizationFactor, double minElem){
+	/**
+	 * Method is used to load data from the file and create a dataset object
+	 * @param pathToFile file where the data is listed
+	 * @param bufferSize size of inputs for the next output
+	 * @param numberOfSamples number of samples wanted 
+	 * @param normalizationFactor factor used to normalize the data
+	 * @param minElem minimal element in the dataset
+	 * @return created Dataset 
+	 */
+	public static Dataset loadDataset(String pathToFile, int bufferSize, int numberOfSamples, double normalizationFactor, double minElem){
 		File dataFile = new File(pathToFile);
 		Scanner scan = null;
-		if(elman){
-			bufferSize = 1;
-		}
+		
 		try {
 			scan = new Scanner(dataFile);
 		} catch (FileNotFoundException e) {
@@ -201,7 +200,7 @@ public class ANNTrainer {
 		LinkedList<Data> dataList = new LinkedList<>();
 		
 		
-		while(scan.hasNextLine() && dataList.size() < numberOfSamples){
+		while(scan.hasNextLine() && (dataList.size() < numberOfSamples || numberOfSamples == -1)){
 			if(buffer.size()<bufferSize){
 				buffer.add(2*(scan.nextDouble()-minElem)/normalizationFactor -1);
 			}else{

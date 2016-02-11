@@ -20,6 +20,7 @@ public class FFANN {
 	 * @param numberOfElementsPerLayer number of neurons in the neural layer
 	 * @param transferFunction tranfer functions used per layer
 	 * @param data dataset used to train the neural network
+	 * @param elman true if the neural net is of elman type
 	 */
 	public FFANN(int numberOfElementsPerLayer[], IFunction transferFunction[], Dataset data, boolean elman){
 		this.numberOfElementsPerLayer = numberOfElementsPerLayer;
@@ -37,7 +38,7 @@ public class FFANN {
 		this.neuralLayers = new LinkedList<>();
 		if(elman){
 
-			neuralLayers.add(new NeuralLayer(1, 1, new PassTroughFunction()));
+			neuralLayers.add(new NeuralLayer(numberOfElementsPerLayer[0], numberOfElementsPerLayer[0], new PassTroughFunction()));
 			neuralLayers.add(new NeuralLayer(neuralLayers.get(0).neurons.size()+ numberOfElementsPerLayer[1], numberOfElementsPerLayer[1], transferFunction[0]));
 		}else {
 
@@ -80,11 +81,8 @@ public class FFANN {
 	 * @param elman is a boolean that decides which neural net is being used, if it is true it will calculate outputs like elman neural network does
 	 */
 	public void calcOutputs(double inputs[], double weights[], double[] outputs){
-//		int weightsFrom = 0;
-//		int weightsTo = 0;
 		double[] currentOutput;
 		double[] currentInput;
-//		double[] currentWeights;
 		
 		if(elman){
 			currentInput = Arrays.copyOfRange(inputs, 0, inputs.length+this.outputOfFirstHiddenLayer.length);
@@ -98,10 +96,7 @@ public class FFANN {
 
 		
 		for(int i=1;i<neuralLayers.size();i++){
-//			weightsTo += neuralLayers.get(i).getLayerWeight();
-//			currentWeights = Arrays.copyOfRange(weights, weightsFrom, weightsTo);
 			currentOutput = neuralLayers.get(i).calculateOutput(currentInput, weights);
-//			weightsFrom=weightsTo;
 			currentInput = currentOutput;
 			if(i==neuralLayers.size()-1){
 				if(currentOutput.length != outputs.length){
