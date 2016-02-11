@@ -208,18 +208,7 @@ public class Operators {
 	       Solution copySol = new Solution(sol);
 	       int zamijeni = rand.nextInt(copySol.root.djeceIspodMene);
 
-	       //brisi
-//	       System.out.println("ispis u mutaciji");
-//	       System.out.println();
-//	       growStablo.ispisi();
-//	       System.out.println();
-//	       System.out.println();
-//	       System.out.println();
-//	       System.out.println("mijenjam " + zamijeni);
-//	       copySol.vratiCvorSBrojem(copySol.root, zamijeni, 0).ispisi();
-//	       System.out.println();
-//	       System.out.println();
-	       //ispis
+	  
 	       Cvor zamijenjeni = copySol.vratiCvorSBrojem(copySol.root, zamijeni, 0);
 	       int dubina = copySol.maxDubina - zamijenjeni.dubinaStabla();
 	       
